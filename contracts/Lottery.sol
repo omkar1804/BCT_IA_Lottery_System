@@ -20,5 +20,15 @@ contract Lottery{
         return uint(sha256(abi.encode(block.difficulty,block.timestamp,players)));
     }
 
+    function pickupWinner() public onlyManager{
+        uint index = random() % players.length;
+        payable(players[index]).transfer(address(this).balance);
+        players = new address[](0);
+    }
+
+    modifier onlyManager(){
+        require(msg.sender == manager);
+        _;
+    }
     
 }
