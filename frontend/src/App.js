@@ -10,35 +10,6 @@ function App() {
   const [balance, setbalance] = useState();
   const [currentAcc, setcurrentAcc] = useState();
 
-  const getManager = async () => {
-    const manager_address = await lottery.methods.manager().call();
-    const plyrs = await lottery.methods.getplayers().call();
-    const balnc = await web3.eth.getBalance(lottery.options.address);
-
-    setmanager(manager_address);
-    setplayers(plyrs);
-    setbalance(balnc);
-
-    getCurrentAccount();
-  };
-
-  const getCurrentAccount = async () => {
-    await window.ethereum.enable();
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    setcurrentAcc(accounts[0]);
-    console.log(currentAcc);
-  };
-
-  const enterContract = async (e) => {
-    e.preventDefault();
-    console.log(inputRef.current.value);
-    await lottery.methods.enter().send({
-      from: currentAcc,
-      value: web3.utils.toWei(inputRef.current.value, "ether"),
-    });
-  };
 
   const pickWinner = async (e) => {
     e.preventDefault();
