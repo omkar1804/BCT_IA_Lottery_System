@@ -8,7 +8,7 @@ import web3 from "./web3";
 
 // getaccount();
 
-const address = "0x55038cEd1Edaf4f983c64c0139fA282409429161";
+const address = "0x06bb486644cD1e6eF1982B14A2Ca7C5D9e3f0DCe";
 
 const abi = [
   {

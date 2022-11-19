@@ -1,10 +1,20 @@
-.App {
-  text-align: center;
-  border: 1px solid black;
-  width: 60%;
-  margin: 0 20%;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+body {
+  background-color: #7209b7;
+  color: white;
+}
+
+h3, h4 {
+  color: #7209b7;
+}
+
+.title {
+  font-family: 'Fredoka One', cursive;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center ;
 }

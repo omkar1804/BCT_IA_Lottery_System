@@ -4,6 +4,7 @@ contract("Lottery", (accounts) => {
   it("deploys the contract", async () => {
     const lottery = await Lottery.deployed();
     assert.ok(lottery);
+    console.log("contract factory add:", lottery);
   });
 
   it("allows one player to enter", async () => {
