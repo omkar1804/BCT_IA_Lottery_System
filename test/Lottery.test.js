@@ -6,6 +6,45 @@ contract("Lottery", (accounts) => {
     assert.ok(lottery);
   });
 
+  it("allows one player to enter", async () => {
+    const lottery = await Lottery.deployed();
+    await lottery.enter({
+      from: accounts[0],
+      value: web3.utils.toWei("0.12", "ether"),
+    });
+
+    const players = await lottery.getplayers({ from: accounts[0] });
+
+    assert.equal(accounts[0], players[0]);
+    assert.equal(1, players.length);
+  });
+
+  it("allows multiple players to enter", async () => {
+    const lottery = await Lottery.deployed();
+    await lottery.enter({
+      from: accounts[0],
+      value: web3.utils.toWei("0.12", "ether"),
+    });
+
+    await lottery.enter({
+      from: accounts[1],
+      value: web3.utils.toWei("0.12", "ether"),
+    });
+
+    await lottery.enter({
+      from: accounts[2],
+      value: web3.utils.toWei("0.12", "ether"),
+    });
+
+    const players = await lottery.getplayers({ from: accounts[0] });
+    // console.log(players);
+    assert.equal(accounts[0], players[1]);
+    assert.equal(accounts[1], players[2]);
+    assert.equal(accounts[2], players[3]);
+    assert.equal(4, players.length); //4 after running first test(3+1)
+  });
+
+
   it("resets players !", async () => {
     const lottery = await Lottery.deployed();
     await lottery.resetPlayers({
