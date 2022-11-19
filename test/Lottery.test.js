@@ -44,7 +44,27 @@ contract("Lottery", (accounts) => {
     assert.equal(4, players.length); //4 after running first test(3+1)
   });
 
-
+  it("requires a minimum amount of ether to enter", async () => {
+    const lottery = await Lottery.deployed();
+    try {
+      await lottery.enter({ from: accounts[0], value: 0 });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
+  
+  it("only manager can call pickWinner", async () => {
+    const lottery = await Lottery.deployed();
+    try {
+      await lottery.pickupWinner({
+        from: accounts[1],
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
   it("resets players !", async () => {
     const lottery = await Lottery.deployed();
     await lottery.resetPlayers({
