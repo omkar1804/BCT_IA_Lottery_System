@@ -31,5 +31,11 @@ contract Lottery{
         _;
     }
     
-    
+        function getplayers() public view returns(address[] memory){
+        return players;
+    }
+
+    function resetPlayers() public onlyManager{
+        players = new address[](0);
+    }
 }
