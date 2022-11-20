@@ -66,6 +66,7 @@ contract("Lottery", (accounts) => {
       assert(err);
     }
   });
+
   it("resets players !", async () => {
     const lottery = await Lottery.deployed();
     await lottery.resetPlayers({
