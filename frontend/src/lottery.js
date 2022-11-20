@@ -8,13 +8,27 @@ import web3 from "./web3";
 
 // getaccount();
 
-const address = "0x06bb486644cD1e6eF1982B14A2Ca7C5D9e3f0DCe";
+const address = "0xE75f63D936142667A043B3d5cAda53EFd76946aE";
 
 const abi = [
   {
     inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "lastWinner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
   },
   {
     inputs: [],
@@ -86,8 +100,21 @@ const abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "getWinner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
 ];
 
 const lottery = new web3.eth.Contract(abi, address);
-// console.log("lottery " + lottery);
 export default lottery;
