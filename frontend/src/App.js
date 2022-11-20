@@ -6,11 +6,12 @@ import logo from "./logo.svg";
 
 function App() {
   const inputRef = useRef(null);
-  const [manager, setmanager] = useState();
+  const [manager, setmanager] = useState("0000");
   const [winner, setwinner] = useState();
   const [players, setplayers] = useState([]);
   const [balance, setbalance] = useState();
   const [currentAcc, setcurrentAcc] = useState();
+  const [ismanager, setismanager] = useState(false);
 
   const getManager = async () => {
     const manager_address = await lottery.methods.manager().call();
@@ -36,10 +37,10 @@ function App() {
 
   const enterContract = async (e) => {
     e.preventDefault();
-    console.log(inputRef.current.value);
+    // console.log(inputRef.current.value);
     await lottery.methods.enter().send({
       from: currentAcc,
-      value: web3.utils.toWei(inputRef.current.value, "ether"),
+      value: web3.utils.toWei("0.12", "ether"),
     });
     window.location.reload();
   };
@@ -53,9 +54,9 @@ function App() {
         from: currentAcc,
       });
       const win = await lottery.methods.lastWinner().call();
-      alert(win);
+      // alert(win);
       setwinner(win);
-      window.location.reload();
+      // window.location.reload();
     } else {
       alert("Sorry you are not the manager of the contract !");
     }
@@ -64,7 +65,6 @@ function App() {
   window.ethereum.on("accountsChanged", getCurrentAccount);
 
   useEffect(() => {
-    // alert("called");
     getManager();
   }, []);
 
@@ -101,49 +101,50 @@ function App() {
 
         <hr className="my-1 py-1" />
 
-        <div className="my-2">
-          <h5 className="text-muted mb-2">Want to try your luck?</h5>
-          {/* <label htmlFor="ether">: </label> */}
-          <div className="input-group mb-3">
-            <input
-              ref={inputRef}
-              type="text"
-              id="ether"
-              className="form-control"
-              placeholder="Amount of ether to enter"
-              aria-label="Amount of ether to enter"
-              aria-describedby="button-addon2"
-            />
+        {manager.toLowerCase() === currentAcc ? (
+          <div className="mt-2">
+            <h5 className="text-muted">Pick a Winner?</h5>
             <button
               className="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
               onClick={(e) => {
-                enterContract(e);
+                pickWinner(e);
               }}
             >
-              Enter
+              Pick a Winner
             </button>
           </div>
-        </div>
+        ) : (
+          <div className="my-2">
+            <h5 className="text-muted mb-2">Want to try your luck?</h5>
+            {/* <label htmlFor="ether">: </label> */}
+            <div className="input-group mb-3">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+                onClick={(e) => {
+                  enterContract(e);
+                }}
+              >
+                Enter with 0.12 ethers
+              </button>
+            </div>
+          </div>
+        )}
 
         <hr className="my-1 py-1" />
-
-        <div className="mt-2">
-          <h5 className="text-muted">Pick a Winner?</h5>
-          <button
-            className="btn btn-outline-secondary"
-            onClick={(e) => {
-              pickWinner(e);
-            }}
-          >
-            Pick a Winner
-          </button>
-        </div>
         {winner ? (
-          <div className="mb-2">
-            <h5 className="text-muted">The winner of the last lottery was: </h5>
-            <h4 className="text-decoration-underline">{winner}</h4>
+          <div className="mb-2 w-100 flex flex-column">
+            <h5 className="text-muted">The winner of the lottery is: </h5>
+            <h4 className="text-decoration-underline"> {winner} </h4>
+            <lottie-player
+              src="https://assets8.lottiefiles.com/packages/lf20_ky24lkyk.json"
+              background="transparent"
+              speed="3"
+              style={{ width: "300px", height: "300px" }}
+              loop
+              autoplay
+            ></lottie-player>
           </div>
         ) : (
           <div />
