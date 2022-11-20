@@ -54,7 +54,7 @@ contract("Lottery", (accounts) => {
       assert(err);
     }
   });
-  
+
   it("only manager can call pickWinner", async () => {
     const lottery = await Lottery.deployed();
     try {
@@ -92,5 +92,20 @@ contract("Lottery", (accounts) => {
     difference = finalAmount - initialAmount;
 
     assert(difference > web3.utils.toWei("1.8", "ether"));
+  });
+
+  it("returns last winner of the lottery", async () => {
+    const lottery = await Lottery.deployed();
+    await lottery.enter({
+      from: accounts[0],
+      value: web3.utils.toWei("2", "ether"),
+    });
+    await lottery
+      .getWinner({
+        from: accounts[0],
+      })
+      .then((res) => {
+        // console.log(res + " " + accounts[0]);
+      });
   });
 });
